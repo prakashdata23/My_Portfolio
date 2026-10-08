@@ -403,13 +403,15 @@ const DATA = {
       title: "Lifeline Live Healthcare Engine",
       tag: "Real-time patient vitals streaming engine with emergency trigger alerts",
       stack: ["ADF", "Azure Databricks", "Event Hubs", "ADLS Gen2", "Key Vault", "Power BI", "SQL DB"],
-      gallery: [
-        { name: "Project Architecture Blueprint", src: "https://lh3.googleusercontent.com/d/1NlHUYgNNe1mf4eWMSVHWnzRDh3c5o8Wd" },
-        { name: "ADF Self-Healing Ingestion Pipeline Workflow", src: "https://lh3.googleusercontent.com/d/1PkWd8_f31jJoIPf6IKzTdu5fXnTlHZ2k" }
-      ],
       videos: [
         { name: "Project Walkthrough & Solution Video", src: "https://drive.google.com/file/d/1yYmAJto4oLpuVPVMp5TAvTqke5JP6HyP/preview" },
         { name: "How Data Pipelines Use Watermarks", src: "https://drive.google.com/file/d/1_lhRN5x024EXU79YBf7QhKoTDKTZnVfI/preview" }
+      ],
+      gallery: [
+        { name: "1. End-to-End System Architecture Blueprint", src: "https://lh3.googleusercontent.com/d/1NlHUYgNNe1mf4eWMSVHWnzRDh3c5o8Wd" },
+        { name: "2. ADF Bronze Layer - Ingestion & Self-Healing Architecture", src: "https://lh3.googleusercontent.com/d/1PkWd8_f31jJoIPf6IKzTdu5fXnTlHZ2k" },
+        { name: "3. Self-Healing Azure Ingestion Engine Flow", src: "https://lh3.googleusercontent.com/d/1K05t1g1xGb8se3ER0Bm-krC9CRf8OZ7Q" },
+        { name: "4. Hybrid Stream-Batch Ingestion & Enrichment (PySpark / Databricks)", src: "https://lh3.googleusercontent.com/d/1Wa9tRNSC9XfgSVLrUtWUl_pi_tpN6y7L" }
       ],
       points: [
         "Combined batch data from Azure SQL Database with high-frequency, real-time vital signs streamed via Azure Event Hubs into ADLS Gen2.",
@@ -499,17 +501,6 @@ $("projects").innerHTML = D.projects.map((p, idx) => `
     <div class="more">
       <ul>${p.points.map(x => `<li>${x}</li>`).join("")}</ul>
 
-      ${p.gallery ? `
-        <div class="stacked-gallery">
-          ${p.gallery.map(img => `
-            <div class="image-item">
-              <span class="image-title">${img.name}</span>
-              <img src="${img.src}" alt="${img.name}" loading="lazy" referrerpolicy="no-referrer">
-            </div>
-          `).join("")}
-        </div>
-      ` : ''}
-
       ${p.videos ? `
         <div class="stacked-gallery">
           ${p.videos.map(v => `
@@ -518,6 +509,17 @@ $("projects").innerHTML = D.projects.map((p, idx) => `
               <div class="video-container">
                 <iframe src="${v.src}" allow="autoplay" allowfullscreen></iframe>
               </div>
+            </div>
+          `).join("")}
+        </div>
+      ` : ''}
+
+      ${p.gallery ? `
+        <div class="stacked-gallery">
+          ${p.gallery.map(img => `
+            <div class="image-item">
+              <span class="image-title">${img.name}</span>
+              <img src="${img.src}" alt="${img.name}" loading="lazy" referrerpolicy="no-referrer">
             </div>
           `).join("")}
         </div>
