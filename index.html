@@ -113,7 +113,7 @@ nav a:hover { color: var(--ink); }
 .hero a { pointer-events: auto; }
 .hero-content { max-width: 900px; margin-bottom: 20px; }
 
-/* Dynamic Name Heading - Visible in both Themes */
+/* Dynamic Name Heading */
 .hero h1 {
   font-family: 'Space Grotesque', 'Inter', sans-serif;
   font-size: clamp(36px, 5.5vw, 68px);
@@ -220,7 +220,7 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; margin-top: 1
 .more ul { margin: 0 0 24px; padding-left: 20px; }
 .more li { margin-bottom: 10px; color: var(--mute); font-size: 15px; }
 
-/* Vertical Stacked Gallery */
+/* Vertical Stacked Gallery & Video */
 .stacked-gallery {
   display: flex;
   flex-direction: column;
@@ -252,6 +252,25 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; margin-top: 1
   border: 1px solid var(--panel-border);
   display: block;
   background: #000;
+}
+
+/* Responsive Embed Video Container */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--panel-border);
+  background: #000;
+}
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 /* Timeline / Jobs */
@@ -384,6 +403,14 @@ const DATA = {
       title: "Lifeline Live Healthcare Engine",
       tag: "Real-time patient vitals streaming engine with emergency trigger alerts",
       stack: ["ADF", "Azure Databricks", "Event Hubs", "ADLS Gen2", "Key Vault", "Power BI", "SQL DB"],
+      gallery: [
+        { name: "Project Architecture Blueprint", src: "https://lh3.googleusercontent.com/d/1NlHUYgNNe1mf4eWMSVHWnzRDh3c5o8Wd" },
+        { name: "ADF Self-Healing Ingestion Pipeline Workflow", src: "https://lh3.googleusercontent.com/d/1PkWd8_f31jJoIPf6IKzTdu5fXnTlHZ2k" }
+      ],
+      videos: [
+        { name: "Project Walkthrough & Solution Video", src: "https://drive.google.com/file/d/1yYmAJto4oLpuVPVMp5TAvTqke5JP6HyP/preview" },
+        { name: "How Data Pipelines Use Watermarks", src: "https://drive.google.com/file/d/1_lhRN5x024EXU79YBf7QhKoTDKTZnVfI/preview" }
+      ],
       points: [
         "Combined batch data from Azure SQL Database with high-frequency, real-time vital signs streamed via Azure Event Hubs into ADLS Gen2.",
         "Built dynamic parameterized ADF pipelines using ForEach and Until (Self-Healing) activities for 24/7 reliability.",
@@ -463,20 +490,34 @@ $("tabs").onclick = e => { const b = e.target.closest(".tab"); if (b) showLayer(
 showLayer(2);
 
 $("projects").innerHTML = D.projects.map((p, idx) => `
-  <article class="proj ${idx === 2 ? 'open' : ''}">
-    <button class="proj-head" aria-expanded="${idx === 2}">
+  <article class="proj ${idx === 0 ? 'open' : ''}">
+    <button class="proj-head" aria-expanded="${idx === 0}">
       <h3>${p.title}</h3>
       <div class="tag">${p.tag}</div>
       <div class="chips">${p.stack.map(s => `<span>${s}</span>`).join("")}</div>
     </button>
     <div class="more">
       <ul>${p.points.map(x => `<li>${x}</li>`).join("")}</ul>
+
       ${p.gallery ? `
         <div class="stacked-gallery">
           ${p.gallery.map(img => `
             <div class="image-item">
               <span class="image-title">${img.name}</span>
               <img src="${img.src}" alt="${img.name}" loading="lazy" referrerpolicy="no-referrer">
+            </div>
+          `).join("")}
+        </div>
+      ` : ''}
+
+      ${p.videos ? `
+        <div class="stacked-gallery">
+          ${p.videos.map(v => `
+            <div class="image-item">
+              <span class="image-title">${v.name}</span>
+              <div class="video-container">
+                <iframe src="${v.src}" allow="autoplay" allowfullscreen></iframe>
+              </div>
             </div>
           `).join("")}
         </div>
